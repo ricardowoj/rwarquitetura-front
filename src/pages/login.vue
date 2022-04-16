@@ -1,10 +1,10 @@
 <template>
-  <div>
+  <div :style="backgroundColor">
     <div>
       <img src="~assets/login-image-left.jpg" class="wave-left" alt="login-wave">
     </div>
-    <div class="row" style="height: 90vh;">
-      <div class="col-12 col-md-6 flex justify-center content-center" style="width: 100%">
+    <div class="row" style="height: 100vh" >
+      <div class="col-12 col-md-6 flex justify-center content-center" style="width: 100%" >
         <q-card :style="$q.screen.lt.sm ? {'min-width': '70%'} : {'min-width': '25%'}" style="height: 45%">
           <q-card-section>
             <q-avatar size="80px" class="absolute-center shadow-1" color="secondary">
