@@ -11,6 +11,9 @@ export default {
     const inputSenha = ref(null)
 
     return {
+      backgroundColor: {
+        backgroundColor: '#92A9BD'
+      },
       model: ref(''),
       inputEmail,
       inputSenha,
