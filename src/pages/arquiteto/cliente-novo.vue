@@ -130,6 +130,8 @@
             ref="inputEmail"
             filled
             dense
+            readonly
+            disable
             label="E-mail"
             type="email"
             v-model="cadastro.usuario.email"
@@ -147,6 +149,15 @@
             :rules="[
               val => !!val || 'Telefone é obrigatório'
             ]"
+          />
+          <q-input
+            filled
+            dense
+            v-if="clienteNovo == false"
+            color="grey-3"
+            label="Alterar Senha de acesso"
+            type="password"
+            v-model="cadastro.password"
           />
           <q-card-actions class="q-mt-xs">
             <q-space />

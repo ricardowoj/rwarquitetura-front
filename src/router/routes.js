@@ -18,6 +18,11 @@ const routes = [
         path: '/cliente',
         component: () => import('pages/arquiteto/cliente.vue'),
         meta: { requireLogin: true }
+      },
+      {
+        path: '/projeto',
+        component: () => import('pages/arquiteto/cliente-projeto.vue'),
+        meta: { requireLogin: true }
       }
     ]
   },

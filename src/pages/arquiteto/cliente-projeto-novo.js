@@ -5,7 +5,7 @@ let $q
 
 const CADASTRO = {
   idArquiteto: '',
-  idUsuario: '',
+  idClienteSecundario: '',
   nome: '',
   tipoDocumento: 1,
   numeroDoc: '',
@@ -75,9 +75,10 @@ export default {
   },
 
   methods: {
-    abrirNovo (arquiteto) {
+    abrirNovo (arquiteto, clienteSecundario) {
       this.clienteNovo = true
       this.cadastro.idArquiteto = arquiteto.id
+      this.cadastro.idClienteSecundario = clienteSecundario.id
       this.cadastro.nome = ''
       this.cadastro.numeroDoc = ''
       this.cadastro.cidade = ''
