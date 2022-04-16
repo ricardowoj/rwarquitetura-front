@@ -3,7 +3,6 @@ import { api } from 'src/boot/axios'
 import jwtDecode from 'jwt-decode'
 let $q
 import clienteNovo from './cliente-novo.vue'
-import clienteEditar from './cliente-editar.vue'
 import clienteDetalhe from './cliente-detalhe.vue'
 
 const COLUMNS = [
@@ -38,7 +37,7 @@ const COLUMNS = [
 
 export default {
   name: 'Cliente',
-  components: { clienteNovo, clienteEditar, clienteDetalhe },
+  components: { clienteNovo, clienteDetalhe },
   data () {
     return {
       arquiteto: '',

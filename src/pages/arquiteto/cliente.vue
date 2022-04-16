@@ -43,7 +43,6 @@
     </q-table>
   </div>
   <cliente-novo ref="clienteNovo" @buscarClientes="buscarClientes"/>
-  <cliente-editar ref="clienteEditar" @buscarClientes="buscarClientes"/>
   <cliente-detalhe ref="clienteDetalhe"/>
 </template>
 
