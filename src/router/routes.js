@@ -21,7 +21,7 @@ const routes = [
       },
       {
         path: '/projeto',
-        component: () => import('pages/arquiteto/cliente-projeto.vue'),
+        component: () => import('pages/arquiteto/projeto.vue'),
         meta: { requireLogin: true }
       }
     ]

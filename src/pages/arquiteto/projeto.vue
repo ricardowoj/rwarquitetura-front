@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md">
     <q-table
-      title="Clientes"
+      title="Projetos"
       color="primary"
       card-class="bg-blue-grey-1 text-black"
       table-class="text-black"
@@ -17,7 +17,7 @@
             dense
             color="primary"
             icon="person_add"
-            label="Novo Cliente"
+            label="Novo Projeto"
             no-caps
             @click="abrirNovo()"
           />
@@ -42,9 +42,8 @@
       </template>
     </q-table>
   </div>
-  <cliente-novo ref="clienteNovo" @buscarClientes="buscarClientes"/>
-  <cliente-editar ref="clienteEditar" @buscarClientes="buscarClientes"/>
+  <projeto-novo ref="projetoNovo" @buscarProjetos="buscarProjetos"/>
   <cliente-detalhe ref="clienteDetalhe"/>
 </template>
 
-<script src="./cliente.js"></script>
+<script src="./projeto.js"></script>

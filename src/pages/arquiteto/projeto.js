@@ -1,9 +1,8 @@
-import { useQuasar, date } from 'quasar'
+import { useQuasar } from 'quasar'
 import { api } from 'src/boot/axios'
 import jwtDecode from 'jwt-decode'
 let $q
-import clienteNovo from './cliente-novo.vue'
-import clienteEditar from './cliente-editar.vue'
+import projetoNovo from './projeto-novo.vue'
 import clienteDetalhe from './cliente-detalhe.vue'
 
 const COLUMNS = [
@@ -16,29 +15,50 @@ const COLUMNS = [
   {
     name: 'nome',
     align: 'left',
-    label: 'Nome',
-    field: row => row.nome,
+    label: 'Cliente',
+    field: row => row.clienteSecundario.nome,
     sortable: true
   },
   {
-    name: 'email',
+    name: 'cidade',
     align: 'left',
-    label: 'E-mail',
-    field: row => row.usuario.email,
+    label: 'Cidade',
+    field: row => row.cidade,
     sortable: true
   },
   {
-    name: 'dhCadastro',
+    name: 'rua',
     align: 'left',
-    label: 'DH Cadastro',
-    field: row => date.formatDate(row.dhCadastro, 'DD/MM/YYYY HH:mm'),
+    label: 'Rua',
+    field: row => row.rua,
+    sortable: true
+  },
+  {
+    name: 'tipoProjeto',
+    align: 'left',
+    label: 'Tipo Projeto',
+    field: row => {
+      if (row.tipoProjeto === 1) {
+        return 'Residêncial'
+      } else if (row.tipoProjeto === 2) {
+        return 'Residêncial'
+      } else if (row.tipoProjeto === 3) {
+        return 'Comercial'
+      } else if (row.tipoProjeto === 4) {
+        return 'Educacional'
+      } else if (row.tipoProjeto === 5) {
+        return 'Saúde'
+      } else if (row.tipoProjeto === 6) {
+        return 'Estatal'
+      }
+    },
     sortable: true
   }
 ]
 
 export default {
   name: 'Cliente',
-  components: { clienteNovo, clienteEditar, clienteDetalhe },
+  components: { projetoNovo, clienteDetalhe },
   data () {
     return {
       arquiteto: '',
@@ -65,7 +85,7 @@ export default {
       api.post('/arquiteto/buscarPorEmail', emailDTO)
         .then((res) => {
           this.arquiteto = res.data
-          this.buscarClientes()
+          this.buscarProjetos()
         })
         .catch((error) => {
           if (error.response.data.error === 'Not Found') {
@@ -82,8 +102,8 @@ export default {
         })
     },
 
-    buscarClientes () {
-      api.get('/cliente/arquiteto/' + this.arquiteto.id)
+    buscarProjetos () {
+      api.get('projeto/arquiteto/' + this.arquiteto.id)
         .then((res) => {
           this.rows = res.data
         })
@@ -98,128 +118,11 @@ export default {
     },
 
     abrirNovo () {
-      this.$refs.clienteNovo.abrirNovo(this.arquiteto)
-    },
-
-    buscarCep () {
-      if (!(/^[0-9]{8}$/).test(this.cadastro.cep.replace(/[^a-zA-Z0-9]/g, ''))) {
-        return
-      }
-      const cep = {
-        cep: this.cadastro.cep.replace(/[^a-zA-Z0-9]/g, '')
-      }
-      api.post('/arquiteto/cep', cep)
-        .then((res) => {
-          this.cadastro.cidade = res.data.localidade
-          this.cadastro.estado = res.data.uf
-          this.cadastro.rua = res.data.logradouro
-          this.cadastro.bairro = res.data.bairro
-        })
-        .catch((error) => {
-          if (error.response) {
-            $q.notify({
-              type: 'negative',
-              message: error.response.data.message
-            })
-          }
-        })
+      this.$refs.projetoNovo.abrirNovo(this.arquiteto)
     },
 
     abrirEditar (row) {
       this.$refs.clienteNovo.abrirEditar(row)
-    },
-
-    abrirClienteDetalhe (row) {
-      this.$refs.clienteDetalhe.abrir(row)
-    },
-
-    validarCpf (value) {
-      const inputCPF = value.replace(/[^a-zA-Z0-9]/g, '')
-      let soma = 0
-      let resto
-      let i
-
-      if (inputCPF === '00000000000') return false
-      for (i = 1; i <= 9; i++) soma = soma + parseInt(inputCPF.substring(i - 1, i)) * (11 - i)
-      resto = (soma * 10) % 11
-
-      if ((resto === 10) || (resto === 11)) resto = 0
-      if (resto !== parseInt(inputCPF.substring(9, 10))) return false
-
-      soma = 0
-      for (i = 1; i <= 10; i++) soma = soma + parseInt(inputCPF.substring(i - 1, i)) * (12 - i)
-      resto = (soma * 10) % 11
-
-      if ((resto === 10) || (resto === 11)) resto = 0
-      if (resto !== parseInt(inputCPF.substring(10, 11))) return false
-      return true
-    },
-
-    validarCnpj (cnpj) {
-      const value = cnpj.replace(/[^a-zA-Z0-9]/g, '')
-      if (!value) return false
-
-      // Aceita receber o valor como string, número ou array com todos os dígitos
-      const isString = typeof value === 'string'
-      const validTypes = isString || Number.isInteger(value) || Array.isArray(value)
-
-      // Elimina valor em formato inválido
-      if (!validTypes) return false
-
-      // Filtro inicial para entradas do tipo string
-      if (isString) {
-        // Limita ao máximo de 18 caracteres, para CNPJ formatado
-        if (value.length > 18) return false
-
-        // Teste Regex para veificar se é uma string apenas dígitos válida
-        const digitsOnly = /^\d{14}$/.test(value)
-        // Teste Regex para verificar se é uma string formatada válida
-        const validFormat = /^\d{2}.\d{3}.\d{3}\/\d{4}-\d{2}$/.test(value)
-
-        // Se o formato é válido, usa um truque para seguir o fluxo da validação
-        if (digitsOnly || validFormat) return true
-        // Se não, retorna inválido
-        else return false
-      }
-
-      // Guarda um array com todos os dígitos do valor
-      const match = value.toString().match(/\d/g)
-      const numbers = Array.isArray(match) ? match.map(Number) : []
-
-      // Valida a quantidade de dígitos
-      if (numbers.length !== 14) return false
-
-      // Elimina inválidos com todos os dígitos iguais
-      const items = [...new Set(numbers)]
-      if (items.length === 1) return false
-
-      // Cálculo validador
-      const calc = (x) => {
-        const slice = numbers.slice(0, x)
-        let factor = x - 7
-        let sum = 0
-
-        for (let i = x; i >= 1; i--) {
-          const n = slice[x - i]
-          sum += n * factor--
-          if (factor < 2) factor = 9
-        }
-
-        const result = 11 - (sum % 11)
-
-        return result > 9 ? 0 : result
-      }
-
-      // Separa os 2 últimos dígitos de verificadores
-      const digits = numbers.slice(12)
-
-      // Valida 1o. dígito verificador
-      const digit0 = calc(12)
-      if (digit0 !== digits[0]) return false
-
-      // Valida 2o. dígito verificador
-      const digit1 = calc(13)
-      return digit1 === digits[1]
     }
   }
 }

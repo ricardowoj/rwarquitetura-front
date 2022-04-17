@@ -28,9 +28,6 @@
           <q-btn flat size="md" icon="edit" color="dark" @click="abrirEditar(props.row)">
             <q-tooltip class="bg-accent">Editar</q-tooltip>
           </q-btn>
-          <q-btn flat size="md" icon="account_box" color="dark" @click="abrirClienteDetalhe(props.row)">
-            <q-tooltip class="bg-accent">Detalhar</q-tooltip>
-          </q-btn>
         </q-td>
       </template>
       <template v-slot:body-cell-tipoStatus="props">

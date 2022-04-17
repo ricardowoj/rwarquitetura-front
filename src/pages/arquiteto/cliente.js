@@ -1,4 +1,4 @@
-import { useQuasar, date } from 'quasar'
+import { useQuasar } from 'quasar'
 import { api } from 'src/boot/axios'
 import jwtDecode from 'jwt-decode'
 let $q
@@ -27,10 +27,24 @@ const COLUMNS = [
     sortable: true
   },
   {
-    name: 'dhCadastro',
+    name: 'cidade',
     align: 'left',
-    label: 'DH Cadastro',
-    field: row => date.formatDate(row.dhCadastro, 'DD/MM/YYYY HH:mm'),
+    label: 'Cidade',
+    field: row => row.cidade,
+    sortable: true
+  },
+  {
+    name: 'rua',
+    align: 'left',
+    label: 'Rua',
+    field: row => row.rua,
+    sortable: true
+  },
+  {
+    name: 'telefone',
+    align: 'left',
+    label: 'Telefone',
+    field: row => row.telefone,
     sortable: true
   }
 ]
@@ -126,10 +140,6 @@ export default {
 
     abrirEditar (row) {
       this.$refs.clienteNovo.abrirEditar(row)
-    },
-
-    abrirClienteDetalhe (row) {
-      this.$refs.clienteDetalhe.abrir(row)
     },
 
     validarCpf (value) {
