@@ -94,10 +94,17 @@
                   Cliente
                 </q-item-section>
               </q-item>
+
+              <q-separator class="q-mt-md q-mb-xs" />
+
+              <q-item-label header class="text-weight-bold text-uppercase">
+                PROJETO
+              </q-item-label>
+
               <q-item
                 v-if="getMe.tipoUsuario == 2"
                 active-class="tab-active"
-                to="/projeto"
+                to="/projeto-cadastro"
                 class="q-ma-sm navigation-item"
                 clickable
                 v-ripple
@@ -106,7 +113,7 @@
                   <q-icon name="people" />
                 </q-item-section>
                 <q-item-section>
-                  Projeto
+                  Cadastro
                 </q-item-section>
               </q-item>
             </q-list>

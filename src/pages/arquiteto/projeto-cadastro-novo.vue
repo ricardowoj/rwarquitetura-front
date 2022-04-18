@@ -131,4 +131,4 @@
   </q-dialog>
 </template>
 
-<script src="./projeto-novo.js"></script>
+<script src="./projeto-cadastro-novo.js"></script>

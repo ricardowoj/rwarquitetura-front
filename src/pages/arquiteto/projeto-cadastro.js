@@ -2,7 +2,7 @@ import { useQuasar } from 'quasar'
 import { api } from 'src/boot/axios'
 import jwtDecode from 'jwt-decode'
 let $q
-import projetoNovo from './projeto-novo.vue'
+import projetoNovo from './projeto-cadastro-novo.vue'
 import clienteDetalhe from './cliente-detalhe.vue'
 
 const COLUMNS = [
@@ -69,7 +69,7 @@ const COLUMNS = [
 ]
 
 export default {
-  name: 'Cliente',
+  name: 'projeto-cadastro',
   components: { projetoNovo, clienteDetalhe },
   data () {
     return {

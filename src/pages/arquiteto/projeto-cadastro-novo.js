@@ -160,7 +160,7 @@ export default {
       $q.dialog({
         dark: false,
         title: 'Atenção',
-        message: 'Confirma a criação do projeto?',
+        message: this.projetoNovo === true ? 'Confirma a criação do projeto?' : 'Confirma a edição do projeto?',
         ok: {
           push: false,
           color: 'positive',

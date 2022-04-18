@@ -20,8 +20,8 @@ const routes = [
         meta: { requireLogin: true }
       },
       {
-        path: '/projeto',
-        component: () => import('pages/arquiteto/projeto.vue'),
+        path: '/projeto-cadastro',
+        component: () => import('src/pages/arquiteto/projeto-cadastro.vue'),
         meta: { requireLogin: true }
       }
     ]
