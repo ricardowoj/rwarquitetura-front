@@ -1,8 +1,8 @@
 <template>
   <div :style="backgroundColor">
-    <div>
+    <!-- <div>
       <img src="~assets/login-image-left.jpg" class="wave-left" alt="login-wave">
-    </div>
+    </div> -->
     <div class="row" style="height: 100vh" >
       <div class="col-12 col-md-6 flex justify-center content-center" style="width: 100%" >
         <q-card :style="$q.screen.lt.sm ? {'min-width': '70%'} : {'min-width': '25%'}" style="height: 45%">
@@ -46,9 +46,9 @@
         </q-card>
       </div>
     </div>
-    <div>
+    <!-- <div>
       <img src="~assets/login-image-right.jpg" class="wave-right" alt="login-wave">
-    </div>
+    </div> -->
   </div>
   <div>
     <div :class="$q.screen.lt.md ? 'copyright-mobile' : 'copyright-desktop'">
