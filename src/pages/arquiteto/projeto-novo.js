@@ -6,6 +6,7 @@ let $q
 const CADASTRO = {
   idClienteSecundario: '',
   idTipoProjeto: '',
+  idTipoCaracteristica: '',
   cidade: '',
   estado: '',
   rua: '',
@@ -21,6 +22,11 @@ const TIPO_PROJETO = [
   { label: 'Comercial', value: 3 },
   { label: 'Educacional', value: 4 },
   { label: 'Saúde', value: 5 }
+]
+
+const TIPO_CARACTERISTICA = [
+  { label: 'Designer de Interiores', value: 1 },
+  { label: 'Arquitetônico', value: 2 }
 ]
 
 export default {
@@ -61,7 +67,9 @@ export default {
       arquiteto: '',
       clientes: [],
       tiposDeProjeto: TIPO_PROJETO,
+      tiposDeCaracteristica: TIPO_CARACTERISTICA,
       tipoProjeto: '',
+      tipoCaracteristica: '',
       cliente: ''
     }
   },
@@ -152,7 +160,7 @@ export default {
       $q.dialog({
         dark: false,
         title: 'Atenção',
-        message: 'Confirma a criação do usuário?',
+        message: 'Confirma a criação do projeto?',
         ok: {
           push: false,
           color: 'positive',
@@ -167,6 +175,7 @@ export default {
       }).onOk(() => {
         this.cadastro.idClienteSecundario = this.cliente.value
         this.cadastro.idTipoProjeto = this.tipoProjeto.value
+        this.cadastro.idTipoCaracteristica = this.tipoCaracteristica.value
 
         if (this.projetoNovo === true) {
           api.post('/projeto', this.cadastro)
@@ -222,6 +231,12 @@ export default {
           this.tiposDeProjeto.forEach(tipoProjeto => {
             if (tipoProjeto.value === res.data.tipoProjeto) {
               this.tipoProjeto = tipoProjeto
+            }
+          })
+
+          this.tiposDeCaracteristica.forEach(tipoCaracteristica => {
+            if (tipoCaracteristica.value === res.data.tipoCaracteristica) {
+              this.tipoCaracteristica = tipoCaracteristica
             }
           })
 

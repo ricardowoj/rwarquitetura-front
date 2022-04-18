@@ -27,6 +27,15 @@
                 label="Tipo Projeto"
               />
             </div>
+            <div class="col-12 q-mb-md">
+              <q-select
+                dense
+                filled
+                v-model="tipoCaracteristica"
+                :options="tiposDeCaracteristica"
+                label="Tipo Caracteristica"
+              />
+            </div>
             <div class="col-12">
               <q-input
                 @change="buscarCep()"

@@ -36,7 +36,7 @@ const COLUMNS = [
   {
     name: 'tipoProjeto',
     align: 'left',
-    label: 'Tipo Projeto',
+    label: 'Projeto',
     field: row => {
       if (row.tipoProjeto === 1) {
         return 'Residêncial'
@@ -50,6 +50,18 @@ const COLUMNS = [
         return 'Saúde'
       } else if (row.tipoProjeto === 6) {
         return 'Estatal'
+      }
+    }
+  },
+  {
+    name: 'tipoCaracteristica',
+    align: 'left',
+    label: 'Característica',
+    field: row => {
+      if (row.tipoCaracteristica === 1) {
+        return 'Designer de Interiores'
+      } else if (row.tipoCaracteristica === 2) {
+        return 'Arquitetônico'
       }
     },
     sortable: true
