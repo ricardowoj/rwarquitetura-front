@@ -85,10 +85,12 @@ export default {
       this.$refs.dialog.show()
     },
 
-    abrirEditar (cliente) {
+    abrirEditar (projeto) {
       this.projetoNovo = false
-      this.cadastro.id = cliente.id
-      this.buscarCliente(cliente.id)
+      this.cadastro.id = projeto.id
+      this.arquiteto = projeto.clienteSecundario.arquiteto
+      this.buscarClientes()
+      this.buscarProjeto(projeto.id)
       this.$refs.dialog.show()
     },
 
@@ -187,14 +189,14 @@ export default {
         }
 
         if (this.projetoNovo === false) {
-          api.put('/cliente', this.cadastro)
+          api.put('/projeto', this.cadastro)
             .then(() => {
               $q.notify({
                 type: 'positive',
-                message: 'Cliente Cadastrado com sucesso'
+                message: 'Projeto alterado com sucesso'
               })
               this.sair()
-              this.$emit('buscarClientes')
+              this.$emit('buscarProjetos')
             })
             .catch((error) => {
               if (error.response) {
@@ -208,9 +210,21 @@ export default {
       })
     },
 
-    buscarCliente (id) {
-      api.get('/cliente/' + id)
+    buscarProjeto (id) {
+      api.get('/projeto/' + id)
         .then((res) => {
+          this.clientes.forEach(cliente => {
+            if (cliente.value === res.data.clienteSecundario.id) {
+              this.cliente = cliente
+            }
+          })
+
+          this.tiposDeProjeto.forEach(tipoProjeto => {
+            if (tipoProjeto.value === res.data.tipoProjeto) {
+              this.tipoProjeto = tipoProjeto
+            }
+          })
+
           this.cadastro.cep = res.data.cep
           this.cadastro.cidade = res.data.cidade
           this.cadastro.estado = res.data.estado

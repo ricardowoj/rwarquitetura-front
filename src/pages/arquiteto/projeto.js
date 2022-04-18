@@ -122,7 +122,7 @@ export default {
     },
 
     abrirEditar (row) {
-      this.$refs.clienteNovo.abrirEditar(row)
+      this.$refs.projetoNovo.abrirEditar(row)
     }
   }
 }
