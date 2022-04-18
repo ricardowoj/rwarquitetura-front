@@ -14,6 +14,7 @@ const CADASTRO = {
   cep: '',
   complemento: ''
 }
+
 const TIPO_PROJETO = [
   { label: 'Residêncial', value: 1 },
   { label: 'Multifamiliar', value: 2 },
@@ -98,6 +99,7 @@ export default {
     buscarClientes () {
       api.get('/cliente/arquiteto/' + this.arquiteto.id)
         .then(({ data }) => {
+          this.clientes.length = 0
           data.forEach(cliente => {
             this.clientes.push({ label: 'Nome: ' + cliente.nome + ' | ' + 'Número doc.: ' + cliente.numeroDoc + ' | ' + 'Cidade: ' + cliente.cidade, value: cliente.id })
           })
@@ -125,6 +127,22 @@ export default {
         $q.notify({
           type: 'warning',
           message: 'Formulário preenchido incorretamente'
+        })
+        return
+      }
+
+      if (this.cliente.value === undefined) {
+        $q.notify({
+          type: 'warning',
+          message: 'Cliente preenchido incorretamente'
+        })
+        return
+      }
+
+      if (this.tipoProjeto.value === undefined) {
+        $q.notify({
+          type: 'warning',
+          message: 'Tipo Projeto preenchido incorretamente'
         })
         return
       }
