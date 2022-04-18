@@ -30,7 +30,7 @@ const TIPO_CARACTERISTICA = [
 ]
 
 export default {
-  name: 'projetoNovo',
+  name: 'projeto-novo',
 
   setup () {
     const cidade = ref(null)
@@ -89,6 +89,8 @@ export default {
       this.cadastro.numero = ''
       this.cadastro.bairro = ''
       this.cadastro.complemento = ''
+      this.tipoProjeto = this.tiposDeProjeto[0]
+      this.tipoCaracteristica = this.tiposDeCaracteristica[0]
       this.buscarClientes()
       this.$refs.dialog.show()
     },

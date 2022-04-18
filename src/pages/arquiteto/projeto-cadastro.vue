@@ -39,7 +39,7 @@
       </template>
     </q-table>
   </div>
-  <projeto-cadastro-novo ref="projetoNovo" @buscarProjetos="buscarProjetos"/>
+  <projeto-cadastro-novo ref="projetoCadastroNovo" @buscarProjetos="buscarProjetos"/>
 </template>
 
 <script src="./projeto-cadastro.js"></script>
