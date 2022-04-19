@@ -6,7 +6,7 @@ const routes = [
     children: [
       {
         path: '/meu-perfil',
-        component: () => import('pages/meu-perfil.vue'),
+        component: () => import('src/pages/perfil/meu-perfil.vue'),
         meta: { requireLogin: true }
       },
       {
@@ -16,12 +16,17 @@ const routes = [
       },
       {
         path: '/cliente',
-        component: () => import('pages/arquiteto/cliente.vue'),
+        component: () => import('pages/arquiteto/cliente/cliente.vue'),
         meta: { requireLogin: true }
       },
       {
         path: '/projeto-cadastro',
-        component: () => import('src/pages/arquiteto/projeto-cadastro.vue'),
+        component: () => import('src/pages/arquiteto/projeto/projeto-cadastro.vue'),
+        meta: { requireLogin: true }
+      },
+      {
+        path: '/projeto-levantamento',
+        component: () => import('src/pages/arquiteto/projeto/projeto-levantamento.vue'),
         meta: { requireLogin: true }
       }
     ]
@@ -29,12 +34,12 @@ const routes = [
   {
     name: 'LoginIn',
     path: '/login',
-    component: () => import('pages/login.vue')
+    component: () => import('src/pages/login/login.vue')
   },
 
   {
     path: '/:catchAll(.*)*',
-    component: () => import('pages/Error404.vue')
+    component: () => import('src/pages/error/Error404.vue')
   }
 ]
 

@@ -1,7 +1,7 @@
 <template>
   <q-page>
     <div class="row q-col-gutter-sm q-ma-xs">
-      <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+      <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <q-card class="my-card" flat bordered>
           <q-card-section horizontal>
             <q-card-section class="q-pt-xs">
@@ -26,7 +26,7 @@
             Assessing clients needs and present suitable promoted products. Liaising with and persuading targeted doctors to prescribe our products utilizing effective sales skills.
           </q-card-section>
         </q-card>
-      </div> -->
+      </div>
       <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <q-card>
           <q-card-section>
