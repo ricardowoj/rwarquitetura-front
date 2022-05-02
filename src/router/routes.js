@@ -3,6 +3,9 @@ const routes = [
   {
     path: '/',
     component: () => import('layouts/MainLayout.vue'),
+    redirect: to => {
+      return 'login'
+    },
     children: [
       {
         path: '/meu-perfil',
