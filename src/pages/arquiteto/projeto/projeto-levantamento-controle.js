@@ -37,6 +37,40 @@ const COLUMNS_BRIEFING = [
   }
 ]
 
+const COLUMNS_MEDICAO = [
+  {
+    name: 'actions',
+    label: 'Ações',
+    align: 'center',
+    field: 'actions'
+  },
+  {
+    name: 'nomeArquivo',
+    align: 'left',
+    label: 'Nome Arquivo',
+    field: row => row.nomeArquivo,
+    sortable: true
+  },
+  {
+    name: 'dhTrabalhadaInicio',
+    align: 'left',
+    label: 'DH. Início',
+    field: row => date.formatDate(row.dhTrabalhadaInicio, 'DD/MM/YYYY HH:mm')
+  },
+  {
+    name: 'dhTrabalhadaFim',
+    align: 'left',
+    label: 'DH. Fim',
+    field: row => date.formatDate(row.dhTrabalhadaFim, 'DD/MM/YYYY HH:mm')
+  },
+  {
+    name: 'hrTrabalhada',
+    align: 'left',
+    label: 'HR. Trabalhada',
+    field: row => row.hrTrabalhada
+  }
+]
+
 export default {
   name: 'projeto-levantamento-controle',
   components: { api },
@@ -54,7 +88,13 @@ export default {
       dataHoraInicioBriefing: null,
       dataHoraFimBriefing: null,
       columnsBriefing: COLUMNS_BRIEFING,
-      rowsBriefing: []
+      rowsBriefing: [],
+      arquivoMedicao: null,
+      nomeMedicao: null,
+      columnsMedicao: COLUMNS_MEDICAO,
+      rowsMedicao: [],
+      dataHoraInicioMedicao: null,
+      dataHoraFimMedicao: null
     }
   },
 
@@ -70,6 +110,7 @@ export default {
       this.dataHoraInicioBriefing = null
       this.dataHoraFimBriefing = null
       this.buscarBriefing()
+      this.buscarMedicao()
       this.$refs.dialog.show()
     },
 
@@ -83,19 +124,18 @@ export default {
 
     salvarBriefing () {
       const formData = new FormData()
-      console.log(this.$refs.arquivoBriefing)
       if (this.arquivoBriefing === undefined || this.arquivoBriefing === null) {
         $q.notify({ type: 'warning', message: 'Arquivo Briefing é obrigatório' })
         return
       }
 
-      if (this.nomeArquivo === null) {
+      if (this.nomeBriefing === null) {
         $q.notify({ type: 'warning', message: 'Nome do Arquivo é obrigatório!' })
         return
       }
 
       if (this.dataHoraInicioBriefing === null) {
-        $q.notify({ type: 'warning', message: 'Data Hora INICÍO Briefing é obrigatório!' })
+        $q.notify({ type: 'warning', message: 'Data Hora INÍCIO Briefing é obrigatório!' })
         return
       }
 
@@ -141,6 +181,76 @@ export default {
       api.get('levantamentoBriefing/projeto/' + this.projeto.id)
         .then((res) => {
           this.rowsBriefing = res.data
+        })
+        .catch((error) => {
+          if (error.response.data.error) {
+            $q.notify({
+              type: 'negative',
+              message: error.response.data.error
+            })
+          }
+        })
+    },
+
+    salvarMedicao () {
+      const formData = new FormData()
+      if (this.arquivoMedicao === undefined || this.arquivoMedicao === null) {
+        $q.notify({ type: 'warning', message: 'Arquivo Medição é obrigatório' })
+        return
+      }
+
+      if (this.nomeMedicao === null) {
+        $q.notify({ type: 'warning', message: 'Nome do Arquivo é obrigatório!' })
+        return
+      }
+
+      if (this.dataHoraInicioMedicao === null) {
+        $q.notify({ type: 'warning', message: 'Data Hora INÍCIO Medição é obrigatório!' })
+        return
+      }
+
+      if (this.dataHoraFimMedicao === null) {
+        $q.notify({ type: 'warning', message: 'Data Hora FIM Medição é obrigatório!' })
+        return
+      }
+
+      if (this.dataHoraInicioMedicao >= this.dataHoraFimMedicao) {
+        $q.notify({ type: 'warning', message: 'Data Hora início Medição é menor que o fim!' })
+        return
+      }
+
+      formData.append('arquivo', this.arquivoMedicao)
+      formData.append('idProjeto', this.projeto.id)
+      formData.append('nomeMedicao', this.nomeMedicao)
+      formData.append('dataHoraInicioMedicao', this.dataHoraInicioMedicao)
+      formData.append('dataHoraFimMedicao', this.dataHoraFimMedicao)
+      api.post('/levantamentoMedicao/upload', formData)
+        .then((res) => {
+          this.arquivoMedicao = null
+          this.nomeMedicao = null
+          this.dataHoraInicioMedicao = null
+          this.dataHoraFimMedicao = null
+          this.buscarMedicao()
+        })
+        .catch((error) => {
+          if (error.response.data.error === 'Not Found') {
+            $q.notify({
+              type: 'warning',
+              message: 'Cadastro não localizado'
+            })
+          } else {
+            $q.notify({
+              type: 'negative',
+              message: error.response.data.error
+            })
+          }
+        })
+    },
+
+    buscarMedicao () {
+      api.get('levantamentoMedicao/projeto/' + this.projeto.id)
+        .then((res) => {
+          this.rowsMedicao = res.data
         })
         .catch((error) => {
           if (error.response.data.error) {
