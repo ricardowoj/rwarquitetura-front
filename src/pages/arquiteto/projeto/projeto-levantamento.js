@@ -2,7 +2,7 @@ import { useQuasar } from 'quasar'
 import { api } from 'src/boot/axios'
 import jwtDecode from 'jwt-decode'
 let $q
-import projetoCadastroNovo from './projeto-cadastro-novo.vue'
+import projetoLevantamentoControle from './projeto-levantamento-controle.vue'
 
 const COLUMNS = [
   {
@@ -68,8 +68,8 @@ const COLUMNS = [
 ]
 
 export default {
-  name: 'projeto-cadastro',
-  components: { projetoCadastroNovo },
+  name: 'projeto-levantamento',
+  components: { projetoLevantamentoControle },
   data () {
     return {
       arquiteto: '',
@@ -128,8 +128,8 @@ export default {
         })
     },
 
-    abrirSalvar (row) {
-      this.$refs.projetoLevantamentoSalvar.abrirSalvar(row)
+    abrirEditar (row) {
+      this.$refs.projetoLevantamentoControle.abrirEditar(row)
     }
   }
 }

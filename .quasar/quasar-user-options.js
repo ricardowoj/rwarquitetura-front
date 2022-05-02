@@ -10,11 +10,13 @@
  * Boot files are your "main.js"
  **/
 
+import lang from 'quasar/lang/pt-br'
+
 
 
 import {Notify,Loading,Dialog,QToolbar} from 'quasar'
 
 
 
-export default { config: {},plugins: {Notify,Loading,Dialog,QToolbar} }
+export default { config: {},lang,plugins: {Notify,Loading,Dialog,QToolbar} }
 

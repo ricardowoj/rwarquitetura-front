@@ -14,7 +14,7 @@
       <template v-slot:body-cell-actions="props">
         <q-td :props="props">
           <q-btn flat size="md" icon="visibility" color="dark" @click="abrirEditar(props.row)">
-            <q-tooltip class="bg-accent">Abrir Levantamento</q-tooltip>
+            <q-tooltip class="bg-accent">Visualizar</q-tooltip>
           </q-btn>
         </q-td>
       </template>
@@ -27,7 +27,7 @@
       </template>
     </q-table>
   </div>
-  <projeto-levantamento-salvar ref="projetoLevantamentoSalvar" @buscarProjetos="buscarProjetos"/>
+  <projeto-levantamento-controle ref="projetoLevantamentoControle" @buscarProjetos="buscarProjetos"/>
 </template>
 
 <script src="./projeto-levantamento.js"></script>
