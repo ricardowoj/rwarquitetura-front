@@ -179,7 +179,8 @@
             >
               <template v-slot:body-cell-actions="props">
                 <q-td :props="props">
-                  <!-- <q-btn flat size="sm" icon="delete" color="primary" @click="remover(props.row)"/> -->
+                  <q-btn flat size="sm" icon="download" color="primary" @click="downloadBriefing(props.row)"/>
+                  <q-btn flat size="sm" icon="delete" color="negative" @click="removerBriefing(props.row)"/>
                 </q-td>
               </template>
             </q-table>
@@ -199,7 +200,8 @@
             >
               <template v-slot:body-cell-actions="props">
                 <q-td :props="props">
-                  <!-- <q-btn flat size="sm" icon="delete" color="primary" @click="remover(props.row)"/> -->
+                  <q-btn flat size="sm" icon="download" color="primary" @click="downloadMedicao(props.row)"/>
+                  <q-btn flat size="sm" icon="delete" color="negative" @click="removerMedicao(props.row)"/>
                 </q-td>
               </template>
             </q-table>

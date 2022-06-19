@@ -163,16 +163,10 @@ export default {
           this.buscarBriefing()
         })
         .catch((error) => {
-          if (error.response.data.error === 'Not Found') {
-            $q.notify({
-              type: 'warning',
-              message: 'Cadastro não localizado'
-            })
+          if (error.response.data && error.response.data.message.length > 0) {
+            this.mensagemNotificao('warning', error.response.data.message)
           } else {
-            $q.notify({
-              type: 'negative',
-              message: error.response.data.error
-            })
+            this.mensagemNotificao('negative', error.response.data.error)
           }
         })
     },
@@ -188,6 +182,38 @@ export default {
               type: 'negative',
               message: error.response.data.error
             })
+          }
+        })
+    },
+
+    removerBriefing (row) {
+      api.post('levantamentoBriefing/remover/' + row.id)
+        .then((res) => {
+          this.mensagemNotificao('positive', 'Briefing removido com sucesso: ' + row.nomeArquivo)
+          this.buscarBriefing()
+        })
+        .catch((error) => {
+          if (error.response.data.error) {
+            this.mensagemNotificao('negative', error.response.data.error)
+          }
+        })
+    },
+
+    downloadBriefing (row) {
+      api.get('levantamentoBriefing/download/' + row.id,
+        {
+          responseType: 'arraybuffer',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/pdf'
+          }
+        })
+        .then((response) => {
+          this.prepararDonwloadPdf(response)
+        })
+        .catch((error) => {
+          if (error.response.data.error) {
+            this.mensagemNotificao('negative', error.response.data.error)
           }
         })
     },
@@ -233,16 +259,10 @@ export default {
           this.buscarMedicao()
         })
         .catch((error) => {
-          if (error.response.data.error === 'Not Found') {
-            $q.notify({
-              type: 'warning',
-              message: 'Cadastro não localizado'
-            })
+          if (error.response.data && error.response.data.message.length > 0) {
+            this.mensagemNotificao('warning', error.response.data.message)
           } else {
-            $q.notify({
-              type: 'negative',
-              message: error.response.data.error
-            })
+            this.mensagemNotificao('negative', error.response.data.error)
           }
         })
     },
@@ -260,6 +280,54 @@ export default {
             })
           }
         })
+    },
+
+    removerMedicao (row) {
+      api.post('levantamentoMedicao/remover/' + row.id)
+        .then((res) => {
+          this.mensagemNotificao('positive', 'Medição removida com sucesso: ' + row.nomeArquivo)
+          this.buscarMedicao()
+        })
+        .catch((error) => {
+          if (error.response.data.error) {
+            this.mensagemNotificao('negative', error.response.data.error)
+          }
+        })
+    },
+
+    downloadMedicao (row) {
+      api.get('levantamentoMedicao/download/' + row.id,
+        {
+          responseType: 'arraybuffer',
+          headers: {
+            'Content-Type': 'application/json',
+            Accept: 'application/pdf'
+          }
+        })
+        .then((response) => {
+          this.prepararDonwloadPdf(response)
+        })
+        .catch((error) => {
+          if (error.response.data.error) {
+            this.mensagemNotificao('negative', error.response.data.error)
+          }
+        })
+    },
+
+    mensagemNotificao (type, message) {
+      $q.notify({
+        type: type,
+        message: message
+      })
+    },
+
+    prepararDonwloadPdf (response) {
+      const url = window.URL.createObjectURL(new Blob([response.data]))
+      const link = document.createElement('a')
+      link.href = url
+      link.setAttribute('download', 'file.pdf')
+      document.body.appendChild(link)
+      link.click()
     }
   }
 }

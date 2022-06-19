@@ -2,7 +2,7 @@
   <q-dialog ref="dialog" persistent>
     <q-card class="q-dialog-plugin" style="width: 800px; max-width: 1000vw;">
       <q-toolbar class="bg-primary text-white q-mb-sm">
-        <q-toolbar-title>Novo Cliente</q-toolbar-title>
+        <q-toolbar-title>{{ cadastro.id != null ? 'Editar Cliente' : 'Novo Cliente'}}</q-toolbar-title>
         <q-btn v-close-popup flat round dense icon="close" />
       </q-toolbar>
 
