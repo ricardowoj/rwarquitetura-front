@@ -2,15 +2,26 @@
   <q-dialog ref="dialog" persistent>
     <q-card class="q-dialog-plugin"  style="min-width: 800px; min-width: 600px;">
       <q-toolbar class="bg-primary text-white">
-        <q-toolbar-title>Novo Projeto</q-toolbar-title>
+        <q-toolbar-title>{{cadastro.id !== null ? 'Editar Projeto' : 'Novo Projeto'}}</q-toolbar-title>
+        {{cadastro.id}}
         <q-btn v-close-popup flat round dense icon="close" />
       </q-toolbar>
-
       <q-card>
         <div class="q-ma-md">
           <div class="row">
             <div class="col-12 q-mb-md">
               <q-select
+                v-if="cadastro.id !== null"
+                readonly
+                disabled="{{cadastro.id !== null ? 'true' : 'false'}}"
+                dense
+                filled
+                v-model="cliente"
+                :options="clientes"
+                label="Cliente"
+              />
+              <q-select
+                v-if="cadastro.id === null"
                 dense
                 filled
                 v-model="cliente"
@@ -36,22 +47,22 @@
                 label="Tipo Caracteristica"
               />
             </div>
-            <div class="col-12">
+            <div class="q-ma-xs">
               <q-input
-                @change="buscarCep()"
-                ref="cep"
                 dense
                 filled
-                v-model="cadastro.cep"
                 label="Cep"
                 mask="#####-###"
+                ref="cep"
+                @change="buscarCep()"
+                v-model="cadastro.cep"
                 :rules="[
                   val => !!val || 'Cep é obrigatório',
                   val => (/^[0-9]{8}$/).test(val.replace(/[^a-zA-Z0-9]/g, '')) || 'Cep é inválido'
                 ]"
               />
             </div>
-            <div class="col-12">
+            <div class="q-ma-xs col-7">
               <q-input
                 ref="cidade"
                 dense
@@ -63,7 +74,7 @@
                 ]"
               />
             </div>
-            <div class="col-12">
+            <div class="q-ma-xs">
               <q-input
                 ref="estado"
                 dense
@@ -75,7 +86,7 @@
                 ]"
               />
             </div>
-            <div class="col-12">
+            <div class="q-ma-xs col-7">
               <q-input
                 ref="rua"
                 dense
@@ -87,19 +98,7 @@
                 ]"
               />
             </div>
-            <div class="col-12">
-              <q-input
-                ref="bairro"
-                dense
-                filled
-                v-model="cadastro.bairro"
-                label="Bairro"
-                :rules="[
-                  val => !!val || 'Bairro é obrigatório'
-                ]"
-              />
-            </div>
-            <div class="col-12">
+            <div class="q-ma-xs">
               <q-input
                 ref="numero"
                 dense
@@ -108,6 +107,18 @@
                 label="Numero"
                 :rules="[
                   val => !!val || 'Numero é obrigatório'
+                ]"
+              />
+            </div>
+            <div class="q-ma-xs col-7">
+              <q-input
+                ref="bairro"
+                dense
+                filled
+                v-model="cadastro.bairro"
+                label="Bairro"
+                :rules="[
+                  val => !!val || 'Bairro é obrigatório'
                 ]"
               />
             </div>

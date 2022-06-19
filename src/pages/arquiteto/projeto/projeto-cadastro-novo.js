@@ -3,7 +3,8 @@ import { api } from 'src/boot/axios'
 import { ref } from 'vue'
 let $q
 
-const CADASTRO = {
+const NOVO_CADASTRO = {
+  id: null,
   idClienteSecundario: '',
   idTipoProjeto: '',
   idTipoCaracteristica: '',
@@ -62,7 +63,7 @@ export default {
 
   data () {
     return {
-      cadastro: CADASTRO,
+      cadastro: NOVO_CADASTRO,
       projetoNovo: true,
       arquiteto: '',
       clientes: [],
@@ -82,6 +83,7 @@ export default {
     abrirNovo (arquiteto) {
       this.projetoNovo = true
       this.arquiteto = arquiteto
+      this.cadastro.id = null
       this.cadastro.cep = ''
       this.cadastro.cidade = ''
       this.cadastro.estado = ''
